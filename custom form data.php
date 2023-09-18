@@ -195,7 +195,22 @@ function houzeo_feedback_list_shortcode() {
 
         <input type="submit" value="Submit">
     </form>
+    <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#phone').on('input', function () {
+            var input = $(this);
+            var unformatted = input.val().replace(/\D/g, ''); 
+            var formatted = '';
+            if (unformatted.length >= 10) {
+                formatted = '(' + unformatted.substr(0, 3) + ') ' + unformatted.substr(3, 3) + '-' + unformatted.substr(6, 4);
+            } else {
+                formatted = unformatted;
+            }
 
+            input.val(formatted);
+        });
+    });
+    </script>
 
  <?php   
    
