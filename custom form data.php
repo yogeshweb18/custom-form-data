@@ -40,7 +40,28 @@ function create_custom_form_table() {
     }
 }
 
-add_action('init', 'create_custom_form_table');
+//add_action('init', 'create_custom_form_table');
+
+register_activation_hook(__FILE__, 'custom_contact_form_activation');
+function custom_contact_form_activation() {
+    
+    create_custom_form_table(); 
+}
+
+// Deactivation Hook
+register_deactivation_hook(__FILE__, 'custom_contact_form_deactivation');
+function custom_contact_form_deactivation() {
+    
+}
+
+// Uninstall Hook
+register_uninstall_hook(__FILE__, 'custom_contact_form_uninstall');
+function custom_contact_form_uninstall() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'custom_form_data';
+    $wpdb->query("DROP TABLE IF EXISTS $table_name");
+
+}
 
 function my_ajax_callback() {
     if (isset($_POST['submit'])) {
